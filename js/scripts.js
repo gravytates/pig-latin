@@ -57,10 +57,17 @@ $(function() {
   $("form").submit(function(event){
     event.preventDefault();
     var userInput = $("#userInput").val().toLowerCase();
-    var alphaResult = isNonAlpha(userInput);
-    // var resultQ = isQu(userInput);
+    // var alphaResult;
     var inputArray = userInput.split(" ");
     var pigArray = [];
+
+    inputArray.forEach(function(word){
+      var alphaResult = isNonAlpha(word);
+        if(alphaResult === false){
+          $("p").hide();
+          $(".alerts").append("<li>Please have your input be only letters!</li>");
+        }
+    });
 
     inputArray.forEach(function(word){
       var result = isQu(word);
@@ -70,10 +77,7 @@ $(function() {
     var pigString = pigArray.join(" ");
 
     $(".result").show();
-
-    if (!alphaResult) {
-      $(".alerts").append("<li>Please have your input begin with a letter!</li>");
-    }
+    $("form").hide();
 
     $("#pigResult").append(pigString);
 
