@@ -12,16 +12,14 @@ var isNonAlpha = function(input){
   }
 }
 
-//this checks for a index(0) is a vowel, if so, it will append "ay" to the end of the input
 
-//then this checks to see if index(0) is a consonant, if so, it will append the consonant and "ay" to the end
 var isVowelOrConsonantFirst = function(input){
-  // for(var i = 0; i < vowels.length; i++){
-  //   if(input.charAt(0) === vowels[i]){
-  //     input = input + "ay";
-  //   }
-  // }
-
+  for(var i = 0; i < vowels.length; i++){
+    if(input.charAt(0) === vowels[i]){
+      input = input + "way";
+      return input;
+    }
+  }
   for(var i = 0; i < consonants.length; i++){
     if(input.charAt(0) === consonants[i]) {
       input = input.substring(1, input.length) + (input.charAt(0));
@@ -35,10 +33,26 @@ var isVowelOrConsonantFirst = function(input){
           }
         }
       }
+      return input + "ay";
     }
   }
-  return input + "ay";
 } //ends our function isVowelOrConsonantFirst
+
+
+var isQu = function(input){
+  if(input.substring(0,2) === "qu"){
+    input = input.substring(2, input.length) + "quay";
+  }else if (input.substring(1,3) === "qu"){
+    input = input.substring(3, input.length) + input.charAt(0) + "quay";
+  } else {
+    input = isVowelOrConsonantFirst(input);
+  }
+  return input;
+}
+
+//this checks for a index(0) is a vowel, if so, it will append "ay" to the end of the input
+
+//then this checks to see if index(0) is a consonant, if so, it will append the consonant and "ay" to the end
 
 // ui logic
 $(function() {
@@ -47,8 +61,8 @@ $(function() {
     event.preventDefault();
     var userInput = $("#userInput").val().toLowerCase();
     var alphaResult = isNonAlpha(userInput);
+    var resultQ = isQu(userInput);
 
-    var result1 = isVowelOrConsonantFirst (userInput);
     // result1 = isConsonant(userInput);
 
     $(".result").show();
@@ -57,7 +71,7 @@ $(function() {
       $(".alerts").append("<li>Please have your input begin with a letter!</li>");
     }
 
-    $("#pigResult").append(result1);
+    $("#pigResult").append(resultQ);
 
 
   }); //this closes form submit
