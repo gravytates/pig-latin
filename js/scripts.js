@@ -16,20 +16,29 @@ var isNonAlpha = function(input){
 
 //then this checks to see if index(0) is a consonant, if so, it will append the consonant and "ay" to the end
 var isVowelOrConsonantFirst = function(input){
-  for(var i = 0; i < vowels.length; i++){
-    if(input.charAt(0) === vowels[i]){
-      input = input + "ay";
-    }
-  }
+  // for(var i = 0; i < vowels.length; i++){
+  //   if(input.charAt(0) === vowels[i]){
+  //     input = input + "ay";
+  //   }
+  // }
+
   for(var i = 0; i < consonants.length; i++){
-    if(input.charAt(0) === consonants[i]){
-      // take the first and put it at the end
-      input = input.substring(1, input.length) + (input.charAt(0) + "ay");
-      // then add ay
+    if(input.charAt(0) === consonants[i]) {
+      input = input.substring(1, input.length) + (input.charAt(0));
+      for(var j = 0; j < consonants.length; j++){
+        if(input.charAt(0) === consonants[j]){
+          input = input.substring(1, input.length) + (input.charAt(0));
+          for(var k = 0; k < consonants.length; k++){
+            if(input.charAt(0) === consonants[k]){
+              input = input.substring(1, input.length) + (input.charAt(0));
+            }
+          }
+        }
+      }
     }
   }
-  return input;
-}
+  return input + "ay";
+} //ends our function isVowelOrConsonantFirst
 
 // ui logic
 $(function() {
@@ -51,8 +60,10 @@ $(function() {
     $("#pigResult").append(result1);
 
 
-    this.reset();
-
-
   }); //this closes form submit
-}); //this closes doc ready fxn
+
+  $("#reload").click(function(){
+    location.reload();
+  });
+
+});
